@@ -3,7 +3,7 @@
 1. Склонируй репу
 ```
 git clone https://github.com/ArsenKakasyan/bigdata_practice
-cd bigdata_practice
+cd /bigdata_practice
 ```
 2. Создай venv
 ```
