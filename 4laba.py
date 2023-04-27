@@ -3,22 +3,22 @@ import seaborn as sns
 
 df = pd.read_excel('RawDataset.xlsx', header=None, names=['Country', 'GDP', 'LEABY'])
 
-# Reorder the columns
+# Изменить порядок столбцов
 df = df[['Country', 'GDP', 'LEABY']]
 print(df.head())
 
-# Drop the 'Country' column
+# Удалите столбец "Страна"
 df_numeric = df.drop(columns=['Country'])
 
-# Calculate the correlation matrix
+# Рассчитать корреляционную матрицу
 corr = df_numeric.corr()
 
-# Visualize the correlation matrix as a heatmap
+# Визуализируйте матрицу корреляции как тепловую карту
 sns.heatmap(corr, annot=True)
 
-# Calculate the Pearson correlation coefficient
+# Рассчитать коэффициент корреляции Пирсона
 pearson_coef = df_numeric['GDP'].corr(df_numeric['LEABY'], method='pearson')
 
-# Print the Pearson correlation coefficient
+# Вывести коэфициент корреляции Пирсона
 print('Pearson correlation coefficient:', pearson_coef)
 

@@ -11,7 +11,7 @@ labels = []
 ParentDir = os.path.abspath('Cyrillic')
 ChildDirs = os.listdir(ParentDir)
 
-#Load the dataset using an image processing library like OpenCV or PIL
+# Загрузите набор данных с помощью библиотеки обработки изображений, такой как OpenCV или PIL.
 for folder in ChildDirs:
     label = folder
     child_folder_path = os.path.join(ParentDir, folder)
@@ -27,27 +27,27 @@ for folder in ChildDirs:
             labels.append(label)
         else:
             print(f"Failed to read image: {img_path}")
-#Preprocess the images by resizing them to a smaller size, normalizing the pixel values, and converting the labels to one-hot encoding:
-# Resize images to 28x28
+# Предварительно обработайте изображения, изменив их размер до меньшего размера, нормализовав значения пикселей и преобразовав метки в однократное кодирование:
+# Изменение размера изображений до 28x28
 data = [np.array(img.resize((28, 28), resample=Image.BICUBIC)) for img in data]
 
 
-# Normalize pixel values to [0, 1]
+# Нормализация значений пикселей до [0, 1]
 data = np.array(data) / 255.0
 
-# Convert labels to one-hot encoding
+# Преобразование меток в однократное кодирование
 unique_labels = list(set(labels))
 label_dict = {label: i for i, label in enumerate(unique_labels)}
 labels = [label_dict[label] for label in labels]
 labels = np.eye(len(unique_labels))[labels]
 
-#Split the dataset into training and validation sets:
+# Разделите набор данных на наборы для обучения и проверки:
 train_data, val_data, train_labels, val_labels = train_test_split(data, labels, test_size=0.2, random_state=42)
 
-#CNNs are the most commonly used architecture for image classification tasks:
+# CNN являются наиболее часто используемой архитектурой для задач классификации изображений:
 '''
-This creates a simple CNN with two convolutional layers, two max pooling layers, a fully connected layer with 128 units, a dropout layer for regularization, 
-and a final output layer with softmax activation.
+Это создает простую CNN с двумя сверточными слоями, двумя максимальными объединяющими слоями, полностью связанным слоем со 128 единицами, отсевающим слоем для регуляризации,
+и последний выходной слой с активацией softmax.
 '''
 model = Sequential([
     Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)),
@@ -60,19 +60,19 @@ model = Sequential([
     Dense(len(unique_labels), activation='softmax')
 ])
 
-#Compile the model with an appropriate loss function, optimizer, and metrics:
+# Скомпилируйте модель с соответствующей функцией потерь, оптимизатором и метриками:
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-#Train the model on the training set using the fit method:
+# Обучите модель на тренировочном наборе, используя метод подгонки:
 history = model.fit(train_data, train_labels, epochs=10, batch_size=32, validation_data=(val_data, val_labels))
 
-#Evaluate the model on the validation set using the evaluate method:
+# Оцените модель в наборе проверки, используя метод оценки:
 loss, accuracy = model.evaluate(val_data, val_labels)
 print(f"Validation loss: {loss:.4f}, accuracy: {accuracy:.4f}")
 
 
-# Save the weights to a file
+# Сохраните веса в файл
 model.save_weights('cyrillic_weights.h5')
 
-# Load the weights from the file
+# Загрузите веса из файла
 #model.load_weights('cyrillic_weights.h5')
