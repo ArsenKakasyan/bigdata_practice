@@ -21,4 +21,4 @@ pip install -r requirements.txt
 python labN.py
 ```
 ## Где найти датасет?
-Чтобы запустить 3 лабу, нужно скачать (https://github.com/GregVial/CoMNIST) Cyrillic.zip и сохранить в директории проекта.
+Чтобы запустить 3 лабу, нужно скачать https://github.com/GregVial/CoMNIST/blob/master/images/Cyrillic.zip, распаковать и сохранить в директории проекта.
