@@ -5,13 +5,18 @@
 git clone https://github.com/ArsenKakasyan/bigdata_practice
 cd bigdata_practice
 ```
-2. Установи зависимости requirements.txt
+2. Создай venv
+```
+python -m venv venv
+.\venv\Scripts\activate
+```
+3. Установи зависимости requirements.txt
 
 ```sh
 pip install -r requirements.txt
 ```
 
-3. Запускай нужную лабораторку
+4. Запускай нужную лабораторку
 ```sh
 python labN.py
 ```
